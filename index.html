@@ -62,21 +62,6 @@
   //
   // // More complex / feature filled model
 
-  var Knowledge = function(template) {
-    this.template = template;
-  };
-
-  knowledge.prototype = {
-    laugh: function() {
-      console.log('jaja');
-    },
-    cry: function() {
-      console.log('wahhhhh');
-    }
-  }
-
-  knowledge = new Knowledge($('#knowledge-template').html());
-
   var KnowledgeView = Backbone.View.extend({
     tagName: 'section',
     className: 'knowledge',

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML> <html>
+<head>
+<meta charset="UTF-8">
+<title>Title</title> </head>
+<body>
+  <h1>:D</h1>
+
+<script type="text/template" id="knowledge-template">
+  <h2><%= title %></h2>
+  <p><%= description %></p>
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+<script src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
+<script>
+  // Simple model
+  // var Knowledge = Backbone.Model.extend({});
+  // More complex / feature filled model
+  var KnowledgeModel = Backbone.Model.extend({
+    defaults: {
+      title: '',
+      description: ''
+    },
+    initialize: function() {
+      console.log('initialized');
+      // Built in events
+
+      // Change
+      this.on('change:title', function(){
+        console.log('Title value for this model has changed.');
+      });
+
+      // Failed validation
+      this.on("invalid", function(model, error){
+        console.log(error);
+      });
+    },
+    validate: function(attributes){
+      if(attributes.title === undefined){
+        return "Remember to set a title for your todo.";
+      }
+    },
+    setTitle: function(newTitle){
+      this.set({ title: newTitle });
+    }
+  });
+
+  // Instantiate
+  var knowledge1 = new KnowledgeModel({
+    title: "Ubër Knowledge",
+    description: "We're going to learn a lot here"
+  });
+  // Go over: getters & setters of Model
+  // knowledge1.set('title', 'Figmints');
+  // knowledge1.get('title', 'Figmints');
+  // Go over: validations
+  // knowledge1.set('title', undefined, {validate: true});
+
+
+  // Simple view
+  //
+  // // More complex / feature filled model
+
+  var Knowledge = function(template) {
+    this.template = template;
+  };
+
+  knowledge.prototype = {
+    laugh: function() {
+      console.log('jaja');
+    },
+    cry: function() {
+      console.log('wahhhhh');
+    }
+  }
+
+  knowledge = new Knowledge($('#knowledge-template').html());
+
+  var KnowledgeView = Backbone.View.extend({
+    tagName: 'section',
+    className: 'knowledge',
+    // Cache the template function for a single knowledge item.
+    template: _.template($('#knowledge-template').html()),
+    // render the
+    render: function() {
+      this.$el.html(this.template(this.model.toJSON()));
+      return this;
+    }
+  });
+
+  // Instantiate
+  var knowledgeView1 = new KnowledgeView({model: knowledge1});
+
+  $("body").append(knowledgeView1.render().el);
+</script>
+</body>
+</html>
